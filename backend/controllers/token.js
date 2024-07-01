@@ -6,7 +6,12 @@ function getToken(user){
 
 }
 function getUser(token){
+  try{
   return jwt.verify(token,Sign)
+  }
+  catch{
+    return null
+  }
 }
 
 module.exports={getToken,getUser}
