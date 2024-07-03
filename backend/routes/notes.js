@@ -9,8 +9,8 @@ notesRoute=express()
 notesRoute
 .get("/",handleGetNotes)
 .post("/create",[
-  validator.body("title","Specify a title").exists(),
-  validator.body("content","Specify the content").exists()
+  validator.body("title","Specify a title").isLength({min:1}),
+  validator.body("content","Specify the content").isLength({min:1}),
 ],handleCreateNotes)
 .get("/view/:id",handleViewNote)
 .put("/update/:id",handleUpdateNote)
