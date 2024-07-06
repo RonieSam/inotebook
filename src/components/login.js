@@ -35,7 +35,7 @@ export default function Login() {
     setLoginUser({...loginUser,[e.target.name]:e.target.value})
   }
   useEffect(()=>{
-    localStorage.clear()
+    localStorage.removeItem("authToken")
   })
   return (
     <div className='container-sm' style={{width:"500px", marginTop:"50px"}}>
