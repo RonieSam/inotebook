@@ -12,7 +12,6 @@ notesRoute
   validator.body("title","Specify a title").isLength({min:1}),
   validator.body("content","Specify the content").isLength({min:1}),
 ],handleCreateNotes)
-.get("/view/:id",handleViewNote)
 .put("/update/:id",handleUpdateNote)
 .delete("/delete/:id",handleDeleteNote)
 module.exports=notesRoute

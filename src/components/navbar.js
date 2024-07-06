@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext} from 'react'
 import { Link ,useLocation} from 'react-router-dom'
+import NoteContext from '../contexts/notes/noteContext';
 export default function NavBar() {
   let location = useLocation();
-  
+  const context=useContext(NoteContext)
+  const {name,setName}=context
+  const onClick=()=>{
+    setName("")
+  }
   return (
     <div className='fixed-top'>
       <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -19,17 +24,15 @@ export default function NavBar() {
               <li className="nav-item">
                 <Link className={`nav-link ${(location.pathname==="/about")?"active":""}`} aria-current="page" to="/about">About</Link>
               </li>
-              <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+              {name &&(<li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hi {name}!
           </a>
           <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Action</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
+            <li><Link className="dropdown-item" to="/login" onClick={onClick}>Logout</Link></li>
+            <li><Link className="dropdown-item" to="/signup" onClick={onClick}>Create new Account</Link></li>
           </ul>
-        </li>
+        </li>)}
             </ul>
           </div>
         </div>

@@ -5,8 +5,11 @@ const NoteState=(props)=>{
   const host="http://localhost:8000"
     const [alert,setAlertState]=useState([])
     const [notes,setNotes]=useState([])
+    const [name,setName]=useState()
+
 
     const addNote=async(title,content)=>{
+      const token=localStorage.getItem("authToken")
       const body=JSON.stringify({
         "title":title,
         "content":content
@@ -14,8 +17,9 @@ const NoteState=(props)=>{
       const response= await fetch(`${host}/api/create`, {
         method: "POST",
         headers: { 
-        "cook":" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9uaWUiLCJlbWFpbCI6IndlcnR5dWZkZEBnbWFpbC5jb20iLCJpYXQiOjE3MTk4MjkwOTl9.TbRTiRh7ppTba8V2fuYQjyfzCcH8V-IVJxqIuVcsu4I",
+        "cook":token,
         "Content-type":"application/json"
+
         },
         body:body
       }
@@ -25,10 +29,11 @@ const NoteState=(props)=>{
       setAlert(res)
     }
     const deleteNote=async(noteId)=>{
+      const token=localStorage.getItem("authToken")
       const response= await fetch(`${host}/api/delete/${noteId}`, {
         method: "DELETE",
         headers: { 
-        "cook":" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9uaWUiLCJlbWFpbCI6IndlcnR5dWZkZEBnbWFpbC5jb20iLCJpYXQiOjE3MTk4MjkwOTl9.TbRTiRh7ppTba8V2fuYQjyfzCcH8V-IVJxqIuVcsu4I",
+        "cook":token,
         "Content-type":"application/json"
         }
       });
@@ -37,6 +42,8 @@ const NoteState=(props)=>{
       setAlert(res)
     }
     const editNote=async(noteId,title,content)=>{
+      const token=localStorage.getItem("authToken")
+
       const body=JSON.stringify({
         "title":title,
         "content":content
@@ -44,8 +51,7 @@ const NoteState=(props)=>{
       const response= await fetch(`${host}/api/update/${noteId}`, {
         method: "PUT",
         headers: { 
-        "cook":" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9uaWUiLCJlbWFpbCI6IndlcnR5dWZkZEBnbWFpbC5jb20iLCJpYXQiOjE3MTk4MjkwOTl9.TbRTiRh7ppTba8V2fuYQjyfzCcH8V-IVJxqIuVcsu4I",
-        "Content-type":"application/json"
+        "cook":token
 
         },
         body:body
@@ -58,13 +64,14 @@ const NoteState=(props)=>{
       const note=notes.filter((ele)=>{
         return ele._id===noteId
       })
-      return note[0]
+       return note[0]
     }
     const getNotes=async()=>{
+      const token=localStorage.getItem("authToken")
       try{const response= await fetch(`${host}/api`, {
         method: "GET",
         headers: { 
-        "cook":" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicm9uaWUiLCJlbWFpbCI6IndlcnR5dWZkZEBnbWFpbC5jb20iLCJpYXQiOjE3MTk4MjkwOTl9.TbRTiRh7ppTba8V2fuYQjyfzCcH8V-IVJxqIuVcsu4I",
+        "cook":token,
         "Content-type":"application/json"
         }
       });
@@ -84,7 +91,7 @@ const NoteState=(props)=>{
     }
     
     return(
-      <NoteContext.Provider value={{notes,setNotes,addNote,deleteNote,editNote,findNote,getNotes,alert}}>
+      <NoteContext.Provider value={{notes,setNotes,addNote,deleteNote,editNote,findNote,getNotes,alert,setAlert,name,setName}}>
         {props.children}
       </NoteContext.Provider>
     )

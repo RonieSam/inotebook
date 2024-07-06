@@ -10,7 +10,6 @@ async function handleGetNotes(req,res){
 async function handleCreateNotes(req,res){
   const err=validator.validationResult(req)
   if(!err.isEmpty()){  
-    console.log(err.errors)
     err.errors[0].type="danger"
     return res.status(400).json(err.errors[0])}
   try{const user=req.user
@@ -30,18 +29,7 @@ async function handleCreateNotes(req,res){
   }
 }
 
-async function handleViewNote(req,res){
- try{const noteId=req.params.id
-  const userId=req.user.id
-  console.log(noteId,userId)
-  const note=await noteModel.findOne({_id:noteId,createdBy:userId})
-  if (note)return res.status(200).json(note)
-  else return res.status(400).json({type:"danger",msg:"No Note Found"})}
-  catch(error){
-    console.log(error)
-    return res.status(500).json({type:"danger",msg:"some error occured"})
-  }
-}
+
 
 async function handleUpdateNote(req,res){
   try{const noteId=req.params.id
@@ -70,4 +58,4 @@ async function handleDeleteNote(req,res){
     }
   }
 
-module.exports={handleGetNotes,handleCreateNotes,handleViewNote,handleUpdateNote,handleDeleteNote}
+module.exports={handleGetNotes,handleCreateNotes,handleUpdateNote,handleDeleteNote}

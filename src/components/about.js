@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useContext ,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
+import NoteContext from '../contexts/notes/noteContext'
 
 const About = () => {
+  const navigate=useNavigate()
+  const context=useContext(NoteContext)
+  const {setAlert}=context
+  useEffect(()=>{
+    const token=localStorage.getItem("authToken")
+    if(!token) {
+      setAlert({type:"danger",msg:"Unauthorized Login Please"})
+      navigate("/login")}
+  },[navigate,setAlert])
   return (
     <div className='mx-4 d-flex p-2 flex-column align-items-center' style={{marginTop:"100px"}}>
       <h1>About</h1>
